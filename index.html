@@ -130,8 +130,9 @@
         </div>
       </div>
     </main>
-      <div id="visit-badge" style="position:fixed;right:16px;bottom:16px;background:#111;color:#f7f7f7;padding:8px 12px;border-radius:12px;font:600 12px/1.4 'IBM Plex Sans',sans-serif;box-shadow:0 6px 18px rgba(0,0,0,0.18);opacity:0.9;">
-        <span id="visit-count">—</span> visits
+      <div id="visit-badge" style="position:fixed;right:16px;bottom:16px;background:#0f172a;color:#e2fbe8;padding:10px 14px;border-radius:14px;font:600 12px/1.4 'IBM Plex Sans',sans-serif;box-shadow:0 8px 22px rgba(15,23,42,0.35);opacity:0.95;display:flex;align-items:center;gap:8px;border:1px solid rgba(16,185,129,0.35);">
+        <span aria-hidden="true" style="width:8px;height:8px;border-radius:999px;background:#22c55e;display:inline-block;box-shadow:0 0 0 4px rgba(34,197,94,0.12);"></span>
+        <span><strong id="visit-count">—</strong> total visits</span>
       </div>
       <script type="module">
         const visitEl = document.getElementById('visit-count');
