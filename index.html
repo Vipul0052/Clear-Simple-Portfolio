@@ -130,6 +130,20 @@
         </div>
       </div>
     </main>
-    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+      <div id="visit-badge" style="position:fixed;right:16px;bottom:16px;background:#111;color:#f7f7f7;padding:8px 12px;border-radius:12px;font:600 12px/1.4 'IBM Plex Sans',sans-serif;box-shadow:0 6px 18px rgba(0,0,0,0.18);opacity:0.9;">
+        <span id="visit-count">—</span> visits
+      </div>
+      <script type="module">
+        const visitEl = document.getElementById('visit-count');
+        fetch('/api/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug: 'home' }),
+        })
+          .then((res) => res.json())
+          .then(({ count }) => { visitEl.textContent = count ?? '—'; })
+          .catch(() => { visitEl.textContent = '—'; });
+      </script>
+      <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   </body>
 </html>
