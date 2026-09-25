@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <title>404 — Page Not Found | Vipul Sharma</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="The page you are looking for does not exist." />
+    <meta name="robots" content="noindex, follow" />
+
+    <!-- Anti-flicker Theme Initialization (Default Dark Mode) -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css.cache=20250610T202429.css">
+
+    <style>
+      main.error-page {
+        max-width: 650px;
+        width: 100%;
+        padding: 0 20px;
+        margin: 60px auto 80px auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .error-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 15px;
+        max-width: 580px;
+      }
+      .error-code {
+        display: inline-block;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background: var(--code-bg);
+        border: 1px solid var(--code-border);
+        color: #ef4444;
+        margin-bottom: 18px;
+        letter-spacing: 0.5px;
+      }
+      .error-title {
+        display: block;
+        width: 100%;
+        font-size: 38px;
+        font-weight: 700;
+        line-height: 1.25;
+        margin: 0 0 16px 0;
+        color: var(--heading-color);
+      }
+      .error-desc {
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--font-color-regular);
+        margin: 0 0 32px 0;
+      }
+      .error-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+      .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+      }
+      .action-btn.primary {
+        background: var(--btn-bg);
+        border: 1px solid var(--btn-border);
+        color: var(--heading-color);
+      }
+      .action-btn.primary:hover {
+        background: var(--btn-hover-bg);
+        transform: translateY(-1px);
+      }
+      .action-btn.secondary {
+        color: var(--link-color);
+        background: transparent;
+        border: 1px dashed var(--divider-color);
+      }
+      .action-btn.secondary:hover {
+        border-color: var(--link-color);
+        color: var(--link-hover-color);
+      }
+    </style>
+  </head>
+
+  <body class="articles">
+    <div class="header-actions">
+      <button id="theme-toggle" class="apple-toggle-switch" aria-label="Toggle light and dark mode" role="switch" aria-checked="false" title="Toggle theme">
+        <span class="switch-track">
+          <span class="switch-icon sun-icon-wrap" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <line x1="12" y1="2" x2="12" y2="4"></line>
+              <line x1="12" y1="20" x2="12" y2="22"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="2" y1="12" x2="4" y2="12"></line>
+              <line x1="20" y1="12" x2="22" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span class="switch-icon moon-icon-wrap" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="switch-knob"></span>
+        </span>
+      </button>
+
+      <a href="index.html" class="apple-header-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+    </div>
+
+    <main class="error-page">
+      <div class="back" style="margin-bottom: 20px;">
+        <a href="index.html" class="back-link">← Return Home</a>
+      </div>
+
+      <div class="error-wrapper">
+        <div class="error-code">404 // NOT_FOUND</div>
+        <h1 class="error-title"><mark>Lost in the void?</mark></h1>
+        <p class="error-desc">
+          The page or resource you are looking for doesn't exist, was moved, or has been deleted.
+        </p>
+
+        <div class="error-actions">
+          <a href="index.html" class="action-btn primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Back to Home</span>
+          </a>
+          <a href="blog.html" class="action-btn secondary">
+            <span>Read Articles →</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      // Apple-style View Transition theme toggle
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', (event) => {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+          if (!document.startViewTransition) {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            return;
+          }
+
+          const rect = themeToggleBtn.getBoundingClientRect();
+          const x = event.clientX || (rect.left + rect.width / 2);
+          const y = event.clientY || (rect.top + rect.height / 2);
+
+          const endRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+          );
+
+          const transition = document.startViewTransition(() => {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+          });
+
+          transition.ready.then(() => {
+            document.documentElement.animate(
+              {
+                clipPath: [
+                  `circle(0px at ${x}px ${y}px)`,
+                  `circle(${endRadius}px at ${x}px ${y}px)`
+                ]
+              },
+              {
+                duration: 550,
+                easing: 'cubic-bezier(0.2, 0, 0, 1)',
+                pseudoElement: '::view-transition-new(root)'
+              }
+            );
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

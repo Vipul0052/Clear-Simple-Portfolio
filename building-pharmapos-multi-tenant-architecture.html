@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <title>Building PharmaPOS: Multi-Tenant Architecture & Real-Time Sync with Supabase — Vipul Sharma</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A complete engineering deep-dive on how I built PharmaPOS, a production multi-tenant POS suite with Supabase RLS, real-time inventory tracking, and batch expiry alerts." />
+    <meta name="keywords" content="PharmaPOS, Multi-Tenancy, Supabase RLS, React, TypeScript, PostgreSQL, Web Development, Vipul Sharma" />
+    <meta name="author" content="Vipul Sharma" />
+    <meta name="language" content="EN" />
+
+    <!-- Anti-flicker Theme Initialization (Default Dark Mode) -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://vipulxdev.com/building-pharmapos-multi-tenant-architecture.html">
+    <meta property="og:title" content="Building PharmaPOS: Multi-Tenant Architecture & Real-Time Sync with Supabase">
+    <meta property="og:description" content="How I architected and shipped PharmaPOS — a cloud-based multi-tenant POS suite with Supabase PostgreSQL RLS and real-time inventory management.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css.cache=20250610T202429.css">
+
+    <style>
+      .article-body {
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--font-color-regular);
+      }
+      .article-body h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--heading-color);
+        margin-top: 38px;
+        margin-bottom: 14px;
+        line-height: 1.35;
+      }
+      .article-body h3 {
+        font-size: 19px;
+        font-weight: 600;
+        color: var(--heading-color);
+        margin-top: 24px;
+        margin-bottom: 10px;
+      }
+      .article-body p {
+        margin-bottom: 18px;
+        text-indent: 0 !important;
+      }
+      .article-body ul, .article-body ol {
+        margin-bottom: 22px;
+        padding-left: 24px;
+      }
+      .article-body li {
+        margin-bottom: 8px;
+        line-height: 1.65;
+      }
+      .callout {
+        background: var(--code-bg);
+        border-left: 4px solid var(--link-color);
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+        border-top: 1px solid var(--code-border);
+        border-right: 1px solid var(--code-border);
+        border-bottom: 1px solid var(--code-border);
+      }
+      .callout p {
+        margin: 0;
+      }
+      .callout.tip {
+        border-left-color: #10b981;
+      }
+      .callout.info {
+        border-left-color: #3b82f6;
+      }
+      .code-container {
+        background: var(--code-bg);
+        border: 1px solid var(--code-border);
+        border-radius: 8px;
+        padding: 16px 18px;
+        font-family: var(--font-family-mono);
+        font-size: 13.5px;
+        overflow-x: auto;
+        margin: 18px 0 24px 0;
+        color: var(--heading-color);
+        line-height: 1.55;
+      }
+      .code-container code {
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: inherit;
+        color: inherit;
+      }
+      .apple-header-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--theme-toggle-bg);
+        border: 1px solid var(--theme-toggle-border);
+        color: var(--theme-toggle-color);
+        font-family: var(--font-family-sans);
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 999px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .apple-header-btn:hover {
+        background: var(--theme-toggle-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      .step-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--link-color);
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+
+  <body class="post">
+    <div class="header-actions">
+      <button id="theme-toggle" class="apple-toggle-switch" aria-label="Toggle light and dark mode" role="switch" aria-checked="false" title="Toggle theme">
+        <span class="switch-track">
+          <span class="switch-icon sun-icon-wrap" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <line x1="12" y1="2" x2="12" y2="4"></line>
+              <line x1="12" y1="20" x2="12" y2="22"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="2" y1="12" x2="4" y2="12"></line>
+              <line x1="20" y1="12" x2="22" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span class="switch-icon moon-icon-wrap" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="switch-knob"></span>
+        </span>
+      </button>
+
+      <a href="blog.html" class="apple-header-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span>All Posts</span>
+      </a>
+    </div>
+
+    <main class="post" style="max-width: 650px; width: 100%; padding: 0 20px; margin: 60px auto 80px auto;">
+      <div class="back" style="margin-bottom: 20px;">
+        <a href="blog.html" class="back-link">← Back to Articles</a>
+      </div>
+
+      <h1 style="font-size: 38px; line-height: 1.25; margin-bottom: 12px; color: var(--heading-color);"><mark>Building PharmaPOS: How I Handled Multi-Tenant Data & Real-Time Inventory with Supabase.</mark></h1>
+      
+      <div class="meta" style="font-size: 13px; color: var(--tagline-text-color); margin-bottom: 28px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <span>Written by <strong>Vipul Sharma</strong></span>
+        <span>•</span>
+        <span>Sep 25, 2025</span>
+        <span>•</span>
+        <span>7 min read</span>
+        <span>•</span>
+        <span style="display: inline-flex; gap: 4px;">
+          <code class="lang" style="font-size: 11px;">React</code>
+          <code class="lang" style="font-size: 11px;">Supabase</code>
+          <code class="lang" style="font-size: 11px;">PostgreSQL</code>
+          <code class="lang" style="font-size: 11px;">Architecture</code>
+        </span>
+      </div>
+
+      <div class="article-body content">
+        <p>
+          When I set out to build <a href="https://pharmapos.org" target="_blank" style="color: var(--link-color); text-decoration: underline;">PharmaPOS</a>, the vision was straightforward: build a blazing-fast, cloud-based POS and inventory management suite tailored for modern pharmacy stores. 
+        </p>
+        <p>
+          However, right from day one, the biggest architectural challenge was <strong>Multi-Tenancy</strong>.
+        </p>
+        <p>
+          Think about it: When dozens of independent medical stores use your SaaS platform, <em>Store A ka data kisi bhi haal me Store B ko leak nahi hona chahiye</em>. Whether it is medicine stocks, sensitive customer phone numbers, or daily GST sales summaries, client-side filtering is never enough. We needed guaranteed, 100% database-level isolation.
+        </p>
+        <p>
+          In this article, I'll walk through how I architected a secure multi-tenant foundation using <strong>PostgreSQL Row-Level Security (RLS)</strong>, handled atomic real-time inventory deductions, and built automated batch-expiry alerts with <strong>Supabase</strong>.
+        </p>
+
+        <h2><span class="step-badge">1</span> Database-Level Multi-Tenancy (Row-Level Security)</h2>
+        <p>
+          In multi-tenant SaaS architecture, you generally have two main approaches:
+        </p>
+        <ol>
+          <li><strong>Database-per-tenant</strong>: Provisioning an isolated database instance for each pharmacy. (Clean isolation, but extremely expensive and complex to maintain at scale).</li>
+          <li><strong>Shared Database with Tenant ID + RLS</strong>: A single PostgreSQL database where every table includes a <code>tenant_id</code> foreign key. (Cost-effective, highly scalable, and rock solid).</li>
+        </ol>
+
+        <p>
+          We chose the shared database model combined with PostgreSQL's native <strong>Row-Level Security (RLS)</strong>. Instead of writing manual <code>WHERE tenant_id = '...'</code> filters on every single frontend query (jisme human error ka chance rehta hai), PostgreSQL engine itself intercepts each query and enforces tenant boundaries automatically.
+        </p>
+
+        <div class="code-container">
+          <code>-- 1. Enable RLS on the medicines table<br>ALTER TABLE medicines ENABLE ROW LEVEL SECURITY;<br><br>-- 2. Policy: Authenticated users can ONLY query their own pharmacy's data<br>CREATE POLICY "Tenant Isolation Policy" ON medicines<br>FOR ALL<br>TO authenticated<br>USING (<br>  tenant_id = (auth.jwt() -> 'app_metadata' ->> 'tenant_id')::uuid<br>);</code>
+        </div>
+
+        <div class="callout tip">
+          <p><strong>💡 Key Takeaway:</strong> By embedding the <code>tenant_id</code> inside the authenticated user's JWT metadata, <em>seedha database engine level pe security enforce ho jati hai</em>. Even if an attacker inspects and tampers with client-side API requests, PostgreSQL returns an empty set for unauthorized records.</p>
+        </div>
+
+        <h2><span class="step-badge">2</span> Real-Time Stock Deductions Without Race Conditions</h2>
+        <p>
+          At a busy pharmacy billing counter, speed and accuracy are everything. When cashiers scan medicines rapidly during peak hours, concurrent checkouts can easily create <strong>race conditions</strong> and result in negative inventory counts.
+        </p>
+        <p>
+          To eliminate race conditions, <em>client-side calculations pe rely karne ki jagah</em>, we execute an atomic PostgreSQL stored function that locks and deducts stock inside an isolated transaction:
+        </p>
+
+        <div class="code-container">
+          <code>CREATE OR REPLACE FUNCTION process_pharmacy_sale(<br>  p_tenant_id UUID,<br>  p_items JSONB<br>) RETURNS VOID AS $$<br>DECLARE<br>  item RECORD;<br>BEGIN<br>  FOR item IN SELECT * FROM jsonb_to_recordset(p_items) AS x(medicine_id UUID, quantity INT) LOOP<br>    -- Atomic deduction with real-time stock verification<br>    UPDATE medicines<br>    SET stock_quantity = stock_quantity - item.quantity<br>    WHERE id = item.medicine_id <br>      AND tenant_id = p_tenant_id<br>      AND stock_quantity >= item.quantity;<br><br>    IF NOT FOUND THEN<br>      RAISE EXCEPTION 'Stock insufficient for item %', item.medicine_id;<br>    END IF;<br>  END LOOP;<br>END;<br>$$ LANGUAGE plpgsql;</code>
+        </div>
+
+        <h2><span class="step-badge">3</span> Batch Expiry Tracking & Automated Alerts</h2>
+        <p>
+          In pharmaceutical retail, selling an expired batch is not just a loss—it is a severe compliance risk. Every medicine batch in PharmaPOS is mapped with a <code>batch_number</code> and <code>expiry_date</code>.
+        </p>
+        <p>
+          We implemented a dynamic traffic-light visual tracking system:
+        </p>
+        <ul>
+          <li>🟢 <strong>Green</strong>: Expiry > 6 months (Safe inventory).</li>
+          <li>🟡 <strong>Yellow</strong>: Expiring within 30–60 days (Automatically populated into a vendor return draft).</li>
+          <li>🔴 <strong>Red</strong>: Expired (Instantly blocked from being scanned at the point-of-sale checkout).</li>
+        </ul>
+
+        <h2><span class="step-badge">4</span> Keyboard-First POS Workflow with React & Framer Motion</h2>
+        <p>
+          Cashiers need maximum throughput during rush hours. We designed the POS interface so that <em>mouse touch kiye bina</em>, staff can perform an entire transaction using intuitive keyboard shortcuts:
+        </p>
+        <ul>
+          <li><code>F2</code> to immediately initialize a new invoice.</li>
+          <li>Barcode scanning auto-focuses the quantity field and validates batch numbers in real-time.</li>
+          <li><code>Ctrl + P</code> triggers instant thermal receipt printing without disrupting the active billing screen.</li>
+        </ul>
+
+        <h2>Final Thoughts</h2>
+        <p>
+          Building a production-ready SaaS taught me that keeping the frontend simple and letting PostgreSQL handle heavy-lifting transactional integrity is the cleanest architectural pattern. It keeps latency sub-50ms, prevents edge-case bugs, and guarantees 100% data security across tenants.
+        </p>
+
+        <div class="callout info">
+          <p>Want to see the live project in action? Visit <a href="https://pharmapos.org" target="_blank" style="color: var(--link-color); font-weight: 600;">PharmaPOS.org</a> or reach out to me at <a href="mailto:hello@vipulxdev.com" style="color: var(--link-color);">hello@vipulxdev.com</a>.</p>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      // Apple-style View Transition theme toggle
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', (event) => {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+          if (!document.startViewTransition) {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            return;
+          }
+
+          const rect = themeToggleBtn.getBoundingClientRect();
+          const x = event.clientX || (rect.left + rect.width / 2);
+          const y = event.clientY || (rect.top + rect.height / 2);
+
+          const endRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+          );
+
+          const transition = document.startViewTransition(() => {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+          });
+
+          transition.ready.then(() => {
+            document.documentElement.animate(
+              {
+                clipPath: [
+                  `circle(0px at ${x}px ${y}px)`,
+                  `circle(${endRadius}px at ${x}px ${y}px)`
+                ]
+              },
+              {
+                duration: 550,
+                easing: 'cubic-bezier(0.2, 0, 0, 1)',
+                pseudoElement: '::view-transition-new(root)'
+              }
+            );
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

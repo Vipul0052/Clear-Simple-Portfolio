@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <title>Articles — Vipul Sharma</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Technical articles and engineering guides by Vipul Sharma on full-stack development, cloud deployment, and AI web applications." />
+    <meta name="keywords" content="Vipul Sharma, Blog, Articles, Vercel Deployment, React, Next.js, Supabase, AI, Web Development" />
+    <meta name="author" content="Vipul Sharma" />
+    <meta name="language" content="EN" />
+
+    <!-- Anti-flicker Theme Initialization (Default Dark Mode) -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vipulxdev.com/blog.html">
+    <meta property="og:title" content="Articles — Vipul Sharma">
+    <meta property="og:description" content="Engineering guides, deployment walkthroughs, and thoughts on building intelligent web applications.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css.cache=20250610T202429.css">
+  </head>
+
+  <body class="articles">
+    <div class="header-actions">
+      <button id="theme-toggle" class="apple-toggle-switch" aria-label="Toggle light and dark mode" role="switch" aria-checked="false" title="Toggle theme">
+        <span class="switch-track">
+          <span class="switch-icon sun-icon-wrap" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <line x1="12" y1="2" x2="12" y2="4"></line>
+              <line x1="12" y1="20" x2="12" y2="22"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="2" y1="12" x2="4" y2="12"></line>
+              <line x1="20" y1="12" x2="22" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span class="switch-icon moon-icon-wrap" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="switch-knob"></span>
+        </span>
+      </button>
+
+      <a href="index.html" class="apple-header-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+    </div>
+
+    <main class="articles">
+      <div class="back">
+        <a href="index.html" class="back-link">← Vipul Sharma</a>
+      </div>
+
+      <h1><mark>Articles.</mark></h1>
+      <p class="tagline" style="margin-top: 6px; margin-bottom: 30px; font-size: 16px; color: var(--tagline-text-color);">
+        Practical guides, engineering architectures, and deep-dives into shipping web apps.
+      </p>
+
+      <div class="articles-list">
+        <div class="group">
+          <div class="year" style="font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--tagline-text-color);">2025</div>
+          <div class="items">
+            <div class="divider" style="height: 1px; background-color: var(--divider-color); margin-bottom: 20px;"></div>
+
+            <!-- Article Item 1 (TOP) -->
+            <article class="article-card" style="margin-bottom: 36px;">
+              <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 6px; line-height: 1.4;">
+                <a href="building-pharmapos-multi-tenant-architecture.html" style="color: var(--link-color); text-decoration: underline;">
+                  Building PharmaPOS: Multi-Tenant Architecture & Real-Time Sync with Supabase
+                </a>
+              </h2>
+              <div class="meta" style="font-size: 13px; color: var(--tagline-text-color); margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <span>📅 Sep 25, 2025</span>
+                <span>•</span>
+                <span>⏱️ 7 min read</span>
+                <span>•</span>
+                <span style="display: inline-flex; gap: 4px;">
+                  <code class="lang" style="font-size: 11px;">React</code>
+                  <code class="lang" style="font-size: 11px;">Supabase</code>
+                  <code class="lang" style="font-size: 11px;">PostgreSQL</code>
+                  <code class="lang" style="font-size: 11px;">Architecture</code>
+                </span>
+              </div>
+              <p style="font-size: 15px; line-height: 1.6; color: var(--font-color-regular); text-indent: 0;">
+                A real-world engineering walkthrough on isolating multi-store pharmacy data with Postgres Row-Level Security (RLS), atomic stock deductions, and batch expiry tracking without race conditions.
+              </p>
+            </article>
+
+            <!-- Article Item 2 -->
+            <article class="article-card" style="margin-bottom: 32px;">
+              <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 6px; line-height: 1.4;">
+                <a href="how-to-deploy-projects-on-vercel-with-custom-domain.html" style="color: var(--link-color); text-decoration: underline;">
+                  How to Deploy Projects on Vercel with a Custom Domain
+                </a>
+              </h2>
+              <div class="meta" style="font-size: 13px; color: var(--tagline-text-color); margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <span>📅 Sep 25, 2025</span>
+                <span>•</span>
+                <span>⏱️ 6 min read</span>
+                <span>•</span>
+                <span style="display: inline-flex; gap: 4px;">
+                  <code class="lang" style="font-size: 11px;">Vercel</code>
+                  <code class="lang" style="font-size: 11px;">DNS</code>
+                  <code class="lang" style="font-size: 11px;">Deployment</code>
+                </span>
+              </div>
+              <p style="font-size: 15px; line-height: 1.6; color: var(--font-color-regular); text-indent: 0;">
+                A complete, step-by-step developer guide to deploying your frontend or full-stack web applications to Vercel, setting up apex (@) and subdomain (www) DNS records with zero downtime, and troubleshooting SSL propagation.
+              </p>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      // Apple-style View Transition theme toggle
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', (event) => {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+          if (!document.startViewTransition) {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            return;
+          }
+
+          const rect = themeToggleBtn.getBoundingClientRect();
+          const x = event.clientX || (rect.left + rect.width / 2);
+          const y = event.clientY || (rect.top + rect.height / 2);
+
+          const endRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+          );
+
+          const transition = document.startViewTransition(() => {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+          });
+
+          transition.ready.then(() => {
+            document.documentElement.animate(
+              {
+                clipPath: [
+                  `circle(0px at ${x}px ${y}px)`,
+                  `circle(${endRadius}px at ${x}px ${y}px)`
+                ]
+              },
+              {
+                duration: 550,
+                easing: 'cubic-bezier(0.2, 0, 0, 1)',
+                pseudoElement: '::view-transition-new(root)'
+              }
+            );
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
