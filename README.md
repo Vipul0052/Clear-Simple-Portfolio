@@ -42,6 +42,7 @@ A fast, minimalist, and accessible personal portfolio and developer blog built w
 │   └── favicon.svg                                       # Custom SVG favicon
 ├── .gitignore
 ├── README.md
+├── vercel.json                                           # Clean URLs configuration
 └── package.json
 ```
 

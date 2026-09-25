@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" data-theme="dark">
+<html lang="en-US">
   <head>
     <meta charset="utf-8">
     <title>Vipul Sharma — Software Engineer</title>
@@ -10,14 +10,14 @@
     <meta name="author" content="Vipul Sharma" />
     <meta name="language" content="EN" />
 
-    <!-- Anti-flicker Theme Initialization (Default Dark Mode) -->
+    <!-- Anti-flicker Theme Initialization (Default Light Mode) -->
     <script>
       (function() {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-        } else {
+        if (savedTheme === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
         }
       })();
     </script>
@@ -69,7 +69,7 @@
         </span>
       </button>
 
-      <a href="blog.html" class="apple-header-btn">
+      <a href="/blog" class="apple-header-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         <span>Blog</span>
       </a>
@@ -225,7 +225,7 @@
       const themeToggleBtn = document.getElementById('theme-toggle');
       if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', (event) => {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
           const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
           // Fallback if browser doesn't support View Transitions API

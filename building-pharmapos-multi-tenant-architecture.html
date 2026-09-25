@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" data-theme="dark">
+<html lang="en-US">
   <head>
     <meta charset="utf-8">
     <title>Building PharmaPOS: Multi-Tenant Architecture & Real-Time Sync with Supabase — Vipul Sharma</title>
@@ -10,14 +10,14 @@
     <meta name="author" content="Vipul Sharma" />
     <meta name="language" content="EN" />
 
-    <!-- Anti-flicker Theme Initialization (Default Dark Mode) -->
+    <!-- Anti-flicker Theme Initialization (Default Light Mode) -->
     <script>
       (function() {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-          document.documentElement.setAttribute('data-theme', 'light');
-        } else {
+        if (savedTheme === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
         }
       })();
     </script>
@@ -27,7 +27,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://vipulxdev.com/building-pharmapos-multi-tenant-architecture.html">
+    <meta property="og:url" content="https://vipulxdev.com/building-pharmapos-multi-tenant-architecture">
     <meta property="og:title" content="Building PharmaPOS: Multi-Tenant Architecture & Real-Time Sync with Supabase">
     <meta property="og:description" content="How I architected and shipped PharmaPOS — a cloud-based multi-tenant POS suite with Supabase PostgreSQL RLS and real-time inventory management.">
 
@@ -173,7 +173,7 @@
         </span>
       </button>
 
-      <a href="blog.html" class="apple-header-btn">
+      <a href="/blog" class="apple-header-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         <span>All Posts</span>
       </a>
@@ -181,7 +181,7 @@
 
     <main class="post" style="max-width: 650px; width: 100%; padding: 0 20px; margin: 60px auto 80px auto;">
       <div class="back" style="margin-bottom: 20px;">
-        <a href="blog.html" class="back-link">← Back to Articles</a>
+        <a href="/blog" class="back-link">← Back to Articles</a>
       </div>
 
       <h1 style="font-size: 38px; line-height: 1.25; margin-bottom: 12px; color: var(--heading-color);"><mark>Building PharmaPOS: How I Handled Multi-Tenant Data & Real-Time Inventory with Supabase.</mark></h1>
@@ -189,7 +189,7 @@
       <div class="meta" style="font-size: 13px; color: var(--tagline-text-color); margin-bottom: 28px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
         <span>Written by <strong>Vipul Sharma</strong></span>
         <span>•</span>
-        <span>Sep 25, 2025</span>
+        <span>Sep 1, 2026</span>
         <span>•</span>
         <span>7 min read</span>
         <span>•</span>
@@ -287,7 +287,7 @@
       const themeToggleBtn = document.getElementById('theme-toggle');
       if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', (event) => {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
           const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
           if (!document.startViewTransition) {
